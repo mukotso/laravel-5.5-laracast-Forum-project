@@ -9,7 +9,7 @@ class RepliesController extends Controller
     public function __constructor(){
         $this->middleware('auth');
     }
-    public function store($channelId, Thread $thread){
+    public function store( Thread $thread){
         $thread->addReply([
             'body'=>request('body'),
             'user_id'=> Auth()->User()->id
