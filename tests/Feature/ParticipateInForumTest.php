@@ -14,8 +14,8 @@ class ParticipateInForumTest extends TestCase
     public function test_an_authenticated_user_may_participate_in_forum_thread()
     {
         //given we have an authenticated user
-//        $this->signIn();
-        $this->be(create('App\User'));
+        $this->signIn();
+//        $this->be(create('App\User'));
         //and an existing thread
         $thread=create('App\Thread');
 //        when a user adds areply to the thread
@@ -26,13 +26,12 @@ class ParticipateInForumTest extends TestCase
             ->assertSee($reply->body);
     }
 
-//    public function test_unauthenticated_user_may_not_add_replies()
-//    {
-//
-//        $this->withoutExceptionHandling();
-//        $this->expectException('Illuminate\Auth\Authentication');
-//        $this->post('/threads/some-channel/1/replies', [])
-//            ->assertRedirect('/login');
-//    }
+    public function test_unauthenticated_user_may_not_add_replies()
+    {
+
+        $this->withExceptionHandling();
+        $this->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
+    }
 
 }

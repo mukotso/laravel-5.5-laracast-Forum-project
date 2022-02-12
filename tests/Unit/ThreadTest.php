@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\User;
+use App\Channel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -30,31 +31,30 @@ class ThreadTest extends TestCase
         $this->assertInstanceOf(User::class,$this->thread->creator);
     }
 //
-//    public function test_a_thread_can_add_a_reply(){
-//        //given we have a thread
-//
-//        $this->thread->addReply([
-//                "body"=>"foor",
-//                'user_id'=>1
-//            ]
-//        );
-//
-//        $this->assertCount(1,$this->thread->replies)
-//    }
-//
-//
-//    public function test_a_thread_belongs_to_a_channnel(){
-//
-//
-//        $thread=create(Thread);
-//        $this->asssertInstanceOf(Channel::class ,$thread->channel)
-//
-//    }
-//
-//    public function test_a_thread_can_make_a_string_path(){
-//        $thread=create  (User);
-//
-//        $this->assertEquals('/threads/{$thread->channel->slug}/{thread->id}',$thread->path()
-//        );
-//    }
+    public function test_a_thread_can_add_a_reply(){
+        //given we have a thread
+
+        $this->thread->addReply([
+                "body"=>"foor",
+                'user_id'=>1
+            ]
+        );
+
+        $this->assertCount(1,$this->thread->replies);
+    }
+
+    public function test_a_thread_belongs_to_a_channel(){
+
+
+        $thread=create('App\Thread');
+        $this->assertInstanceOf(Channel::class ,$thread->channel);
+
+    }
+
+    public function test_a_thread_can_make_a_string_path(){
+        $thread=create('App\Thread');
+
+        $this->assertEquals('/threads/'.$thread->channel->slug.'/'.$thread->id,$thread->path()
+        );
+    }
 }
