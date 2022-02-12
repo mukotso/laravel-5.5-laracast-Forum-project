@@ -10,8 +10,8 @@ Route::get('/', function () {
 
 
 Route::get('/threads', 'ThreadsController@index');
-Route::post('/threads/create', 'ThreadsController@create');
-Route::post('/threads', 'ThreadsController@store');
+Route::get('/threads/create', 'ThreadsController@create')->middleware('auth');;
+Route::post('/threads', 'ThreadsController@store')->middleware('auth');
 Route::get('/threads/{thread}', 'ThreadsController@show');
 //Route::resource('threads', ThreadsController::class);
 //Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');

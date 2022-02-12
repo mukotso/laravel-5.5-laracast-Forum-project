@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ThreadsController extends Controller
 {
     public function __constructor()
     {
-        $this->middleware('auth')->only('store');
+        $this->middleware('auth');
     }
 
     public function index()
