@@ -15,11 +15,11 @@ class ParticipateInForumTest extends TestCase
     {
         //given we have an authenticated user
 //        $this->signIn();
-        $this->be(factory('App\User')->create());
+        $this->be(create('App\User'));
         //and an existing thread
-        $thread=factory('App\Thread')->create();
+        $thread=create('App\Thread');
 //        when a user adds areply to the thread
-        $reply=factory('App\Reply')->make();
+        $reply=make('App\Reply');
         $this->post($thread->path().'/replies',$reply->toArray());
 //    The reply should be visible in the page
         $this->get($thread->path())

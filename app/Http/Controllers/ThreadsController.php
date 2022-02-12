@@ -18,7 +18,7 @@ class ThreadsController extends Controller
         return view('threads.index', compact('threads'));
     }
 
-    public function create()q
+    public function create()
     {
         return view('threads.create');
     }
