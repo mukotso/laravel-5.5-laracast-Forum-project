@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Thread;
 use Illuminate\Http\Request;
 
-class ThreadController extends Controller
+class ThreadsController extends Controller
 {
     public function __constructor()
     {
@@ -35,7 +36,7 @@ class ThreadController extends Controller
         return redirect($thread->path());
     }
 
-    public function show($channelId, Thread $thread)
+    public function show( Thread $thread)
     {
 
         return view('threads.show', compact('thread'));
