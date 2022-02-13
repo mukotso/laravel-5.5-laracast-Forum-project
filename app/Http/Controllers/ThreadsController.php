@@ -6,6 +6,7 @@ use App\Channel;
 use App\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
@@ -14,21 +15,23 @@ class ThreadsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Channel $channel)
+    public function index(Channel $channel ,ThreadFilters $filters)
     {
-        if($channel->exists){
-            $threads= $channel->threads()->latest();
-        }else{
+//        if($channel->exists){
+//            $threads= $channel->threads()->latest();
+//        }else{
+//
+//            $threads = Thread::latest();
+//        }
+//
+//        if($username =request('by')){
+//            $user=\App\User::where('name', $username)->firstOrFail();
+//
+//            $threads->where('user_id',$user->id);
+//        }
+//        $threads = $threads->get();
 
-            $threads = Thread::latest();
-        }
-
-        if($username =request('by')){
-            $user=\App\User::where('name', $username)->firstOrFail();
-
-            $threads->where('user_id',$user->id);
-        }
-        $threads = $threads->get();
+        $threads = $this->getThreads($channel, $filters);
         return view('threads.index', compact('threads'));
     }
 
@@ -60,6 +63,17 @@ class ThreadsController extends Controller
     {
 
         return view('threads.show', compact('thread'));
+    }
+
+    protected function getThreads(Channel $channel, ThreadFilters $filters)
+    {
+        $threads = Thread::filter($filters)->latest();
+
+        if ($channel->exists) {
+            $threads = $threads->whereChannelId($channel->id);
+        }
+
+        return $threads->get();
     }
 
 }

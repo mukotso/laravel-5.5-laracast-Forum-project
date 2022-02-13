@@ -12,7 +12,7 @@ class RepliesController extends Controller
     }
     public function store($channelId, Thread $thread){
 
-        $this->validate(request,[
+        $this->validate(request(),[
             'body'=>'required',
 
         ]);
