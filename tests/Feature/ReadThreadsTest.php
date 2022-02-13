@@ -32,15 +32,26 @@ class ReadThreadsTest extends TestCase
         $response->assertSee($this->thread->title);
 
     }
-//    public function test_a_user_can_read_replies_that_are_associated_to_a_thread(){
-//        //given we have a thread
-//
-//        $reply=Reply::factory()->create(['thread_id'=>$this->thread->id]);
-//        //that thread icludes replies
-//        //when we visit our threads page
-//        $response =$this->get('/threads/'.$this->thread->id);
-//
-//        //we should see replies when we visit that page
-//        $response->assertSee($reply->body);
-//    }
+    public function test_a_user_can_read_replies_that_are_associated_to_a_thread(){
+        //given we have a thread
+
+        $reply=factory('App\Reply')->create(['thread_id'=>$this->thread->id]);
+        //that thread icludes replies
+        //when we visit our threads page
+        $response =$this->get($this->thread->path());
+
+        //we should see replies when we visit that page
+        $response->assertSee($reply->body);
+    }
+
+    function  a_user_can_filter_threads_according_to_a_channel(){
+        $channel=create('App\Channel');
+        $threadInChannel =create('App\thread', ['channel_id'=>$channel->id]);
+        $threadNotInChannel =create('App\Thread');
+
+        $this->get('/threads'. $channel->slug)
+            ->assertSee($threadInChannel->title)
+            ->assertDontSee($threadNotInChannel);
+
+}
 }
