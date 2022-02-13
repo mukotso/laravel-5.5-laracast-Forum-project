@@ -37,7 +37,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="/threads">All Threads</a></li>
-
+                        <li><a href="/threads/create">New Threads</a></li>
                         <li class="dropdown">
                             <a class=" dropdown-toggle" role="button" id="dropdownMenuButton"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
