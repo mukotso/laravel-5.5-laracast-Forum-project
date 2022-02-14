@@ -20,7 +20,7 @@ Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->m
 Route::get('threads/{channel}','ThreadsController@index');
 
 
-Route::post('/replies/{reply}/favorites', 'FavoritesController@store')->middleware('auth');
+Route::post('/replies/{reply}/favorites', 'FavouritesController@store')->middleware('auth');
 
 
 

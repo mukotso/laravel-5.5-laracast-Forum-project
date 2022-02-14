@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Favouritable;
 class Thread extends Model
 {
 
 
     protected $guarded= [];
-
+    protected $with =['creator','channel'];
 //    public function path (){;
 //        return '/threads/'.$this->channel->slug.'/'.$this->id;
 //    }
@@ -20,15 +20,20 @@ class Thread extends Model
         static::addGlobalScope('replyCount', function($builder){
             $builder->withCount('replies');
         });
+//
+//        static::addGlobalScope('creator', function($builder){
+//            $builder->withCount('replies');
+//        });
     }
+
 
     public function path (){;
      return '/threads/'.$this->channel->slug.'/'.$this->id;
     }
 
     public function replies (){;
-        return $this->hasMany(Reply::class)->withCount('favorites')
-            ->withCount('favourites')->with('owner');
+        return $this->hasMany(Reply::class)
+            ->withCount('favorites')->with('owner');
     }
 
     public function creator (){;
