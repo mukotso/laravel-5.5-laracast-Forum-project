@@ -12,4 +12,16 @@ class Reply extends Model
     public function owner(){
         return  $this->belongsTo(User::class ,'user_id');
     }
+
+    public function favourites(){
+        return $this->morphMany(Favorite::class, 'favorited');
+    }
+
+    public function favorite(){
+        $attributes =['user_id' =>auth()->id()];
+        if(! $this->favourites()->where($attributes)->exists()){
+            $this->favourites()->create($attributes);
+        }
+
+    }
 }

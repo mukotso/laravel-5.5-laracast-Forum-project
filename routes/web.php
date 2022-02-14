@@ -18,6 +18,12 @@ Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 //Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->middleware('auth');
 Route::get('threads/{channel}','ThreadsController@index');
+
+
+Route::post('/replies/{reply}/favorites', 'FavoritesController@store')->middleware('auth');
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
