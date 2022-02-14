@@ -5,10 +5,26 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
+                        <div class="level">
+                            <span class="flex">
+
                         <a href="#">{{$thread->creator->name}}</a> posted:
                         {{$thread->title}}
+                        </span>
                     </div>
 
+
+                        @if(Auth()->check())
+                    <form action="{{$thread->path()}}" method="POST">
+                        {{csrf_field()}}
+                        {{method_field('DELETE')}}
+
+                        <button type="submit" class="btn btn-link">DELETE THREAD</button>
+                    </form>
+
+                        @endif
+
+                    </div>
                     <div class="card-body">
                         <article>
                             <div class="body">{{$thread->body}}</div>

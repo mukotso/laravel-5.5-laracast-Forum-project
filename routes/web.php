@@ -14,6 +14,7 @@ Route::get('/threads/create', 'ThreadsController@create')->middleware('auth');;
 Route::post('/threads', 'ThreadsController@store')->middleware('auth');
 //Route::get('/threads/{thread}', 'ThreadsController@show');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
+Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 //Route::resource('threads', ThreadsController::class);
 //Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->middleware('auth');
@@ -29,4 +30,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/profiles/{user}', 'ProfilesController@show');
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
