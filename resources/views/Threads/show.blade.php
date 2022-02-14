@@ -55,7 +55,7 @@
 
 
         </div>
-            {{ $replies->links() }}
+{{--            {{ $replies->links() }}--}}
         @if(auth()->check())
             <div class="row justify-content-center">
                 <div class="col-md-8">

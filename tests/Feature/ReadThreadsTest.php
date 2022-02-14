@@ -65,4 +65,19 @@ public function a_user_can_filter_threads_by_any_username(){
             ->assertSee($threadByJohn ->title)
             ->assertDontSee($threadNotByJohn->title);
 }
+
+    public function a_user_can_filter_by_popularity()
+    {
+        $threadTwoReplies = create('App\Models\Thread');
+        create('App\Models\Reply', ['thread_id' => $threadTwoReplies->id], 2);
+
+        $threadThreeReplies = create('App\Models\Thread');
+        create('App\Models\Reply', ['thread_id' => $threadThreeReplies->id], 3);
+
+        $threadZeroReplies = $this->thread;
+
+        $response = $this->get('threads?popular');
+        $threadsFromResponse = $response->baseResponse->original->getData()['threads'];
+        $this->assertEquals([3,2,0], $threadsFromResponse->pluck('replies_count')->toArray());
+    }
 }
