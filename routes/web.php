@@ -27,3 +27,6 @@ Route::post('/replies/{reply}/favorites', 'FavouritesController@store')->middlew
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/profiles/{user}', 'ProfilesController@show');

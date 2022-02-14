@@ -18,11 +18,10 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    public function getRouteKeyName ()
+    {
+        return 'name';
+    }
     protected $hidden = [
         'password', 'remember_token',
     ];
