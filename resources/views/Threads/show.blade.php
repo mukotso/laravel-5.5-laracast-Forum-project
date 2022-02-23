@@ -8,13 +8,13 @@
                         <div class="level">
                             <span class="flex">
 
-                        <a href="#">{{$thread->creator->name}}</a> posted:
-                        {{$thread->title}}
+                        <a href="{{route('profile',$thread->creator)}}">{{$thread->creator->name}}</a> posted:
+                                <a href="{{$thread->path()}}"> {{$thread->title}} </a>
                         </span>
                     </div>
 
 
-                        @if(Auth()->check())
+                        @can('update',$thread)
                     <form action="{{$thread->path()}}" method="POST">
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
@@ -22,7 +22,7 @@
                         <button type="submit" class="btn btn-link">DELETE THREAD</button>
                     </form>
 
-                        @endif
+                        @endcan
 
                     </div>
                     <div class="card-body">

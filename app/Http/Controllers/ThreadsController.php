@@ -49,7 +49,7 @@ class ThreadsController extends Controller
 
     public function show( $channelId,Thread $thread)
     {
-//return $thread->load('replies.favorite');
+      //return $thread->load('replies.favorite');
         return view('threads.show',
             [
                 'thread'=>$thread,
@@ -71,9 +71,14 @@ class ThreadsController extends Controller
 
     public function destroy($channelSlug, Thread $thread)
     {
-//        $this->authorize('update', $thread);
+        $this->authorize('update', $thread);
+//        if($thread->user_id != auth()->id){
+//
+//            abort(403,'You do not have permission to do this !!!');
+//        }
+     //        $this->authorize('update', $thread);
 
-//        $thread->replies()->delete();
+       //        $thread->replies()->delete();
         $thread->delete();
         if(request()->wantsJson()){
             return response([], 204);

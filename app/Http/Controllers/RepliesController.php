@@ -14,7 +14,6 @@ class RepliesController extends Controller
 
         $this->validate(request(),[
             'body'=>'required',
-
         ]);
 
         $thread->addReply([

@@ -11,6 +11,7 @@ class FavouritesController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function store (Reply $reply)
     {
          $reply->favorite();
