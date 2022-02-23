@@ -11,6 +11,7 @@ class ProfilesTest extends TestCase
 
     public function a_user_has_profile ()
     {
+        $this->signIn();
         $user = create('App\ User');
 
         $this->get('/profiles/'.$user->name)
