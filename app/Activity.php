@@ -16,4 +16,8 @@ class Activity extends Model
                 return $activity->created_at->format('Y-m-d');
             });
     }
+
+    public function subject(){
+        return $this->morphTo();
+    }
 }

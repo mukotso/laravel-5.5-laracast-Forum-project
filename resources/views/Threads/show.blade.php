@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="card">
+                <div id="reply-{{$reply->id}}" class="card">
                     <div class="card-header">
                         <div class="level">
                             <span class="flex">
