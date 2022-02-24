@@ -1,3 +1,4 @@
+<reply :attributes="{{$reply}}" inline-template v-cloak>
 <br>
 <div class="card">
 
@@ -19,17 +20,27 @@
     </div>
 
     <div class="card-body">
-        {{ $reply->body }}
+        <div v-if="editing">
+            <div class="form-group">
+            <textarea class="form-control" v-model="body"></textarea>
+            </div>
+            <button class="btn btn-xs btn-link" @click="editing=false">CANCEL</button>
+            <button class="btn btn-xs btn-primary mr-1" @click="update()">UPDATE</button>
+        </div>
+        <div v-else v-text="body">
+        </div>
     </div>
-@can('update',$reply)
-    <div class="panel-footer">
-        <form action="/replies/{{$reply->id}}" method="POST">
-{{csrf_field()}}
-            {{method_field('DELETE')}}
-            <button type="submit" class="btn btn-danger btn-xs">DELETE</button>
-        </form>
-    </div>
+    @can('update',$reply)
+        <div class="panel-footer">
+            <button class="btn btn-xs mr-1" @click="editing=true">EDIT</button>
+            <form action="/replies/{{$reply->id}}" method="POST">
+                {{csrf_field()}}
+                {{method_field('DELETE')}}
+                <button type="submit" class="btn btn-danger btn-xs">DELETE</button>
+            </form>
+        </div>
 
     @endcan
 
 </div>
+</reply>

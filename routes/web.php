@@ -23,7 +23,7 @@ Route::get('threads/{channel}','ThreadsController@index');
 
 Route::post('/replies/{reply}/favorites', 'FavouritesController@store')->middleware('auth');
 Route::delete('/replies/{reply}','RepliesController@destroy');
-
+Route::patch('/replies/{reply}', 'RepliesController@update');
 
 Auth::routes();
 
