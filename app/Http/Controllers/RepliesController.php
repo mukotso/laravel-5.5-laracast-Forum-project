@@ -33,6 +33,9 @@ class RepliesController extends Controller
 //        }
 
         $reply->delete();
+        if(request()->expectsJson()){
+            return response(['status'=>'Reply Deleted']);
+        }
         return back();
     }
     public function update(Reply $reply){

@@ -22,6 +22,12 @@ props:['attributes'],
           });
           this.editing=false;
           flash('updated');
+        },
+        destroy(){
+          axios.delete('/reply/'+ this.attribute.id);
+          $(this.$el).fadeOut(300,()=>{
+            flash('Your Reply has been deleted');
+          });
         }
       }
 }
