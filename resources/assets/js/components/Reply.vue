@@ -3,9 +3,14 @@
 </template>
 
 <script>
+import Favorite from './favorite.vue';
 export default {
   name: "Reply",
 props:['attributes'],
+
+  components:{
+    Favorite
+  },
   data(){
     return{
       editing:false,

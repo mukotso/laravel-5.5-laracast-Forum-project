@@ -44,8 +44,16 @@ trait Favoritable
     public function isFavorited(){
         return !! $this->favorites()->where('user_id', auth()->id())->count();
     }
+    public function getIsFavouritedAttribute(){
+        return $this->isFavorite();
+    }
 
     public function getFavoritesCountAttribute(){
         return $this->favorites->count();
+    }
+
+    public function unfavorite(){
+       $attributes=['user_id' =>auth()->id()] ;
+       $this->favourites()->where($attributes)->delete();
     }
 }
