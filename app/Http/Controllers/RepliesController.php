@@ -23,4 +23,17 @@ class RepliesController extends Controller
 
         return redirect()->back();
     }
+
+    public function  destroy  (Reply $reply){
+
+        $this->authorize('update', $reply);
+//        if($reply->user_id != auth()->user()->id){
+//            return response([], 403);
+//        }
+
+        $reply->delete();
+        return back();
+
+
+    }
 }
