@@ -2,7 +2,9 @@
   <button type="submit" class="btn btn-sm"
           :class="classes"
           @click="toggle">
-   <span v-text="count"></span> Likes
+    <span class="glyphicon glyphicon-heart"></span>
+   <span v-text="count"></span>
+
   </button>
 </template>
 
