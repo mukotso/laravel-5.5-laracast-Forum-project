@@ -6,7 +6,7 @@
 import Favorite from './favorite.vue';
 export default {
   name: "Reply",
-props:['attributes'],
+  props:['attributes'],
 
   components:{
     Favorite
@@ -21,15 +21,14 @@ props:['attributes'],
   methods:
       {
         update(){
-          axios.patch('/reply'+this.attributes.id,{
+          axios.patch('/replies/'+this.attributes.id,{
             body:this.body
-
           });
           this.editing=false;
           flash('updated');
         },
         destroy(){
-          axios.delete('/reply/'+ this.attribute.id);
+          axios.delete('/replies/'+ this.attributes.id);
           $(this.$el).fadeOut(300,()=>{
             flash('Your Reply has been deleted');
           });

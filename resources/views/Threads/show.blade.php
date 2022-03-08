@@ -3,8 +3,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div id="reply-{{$reply->id}}" class="card">
-                    <div class="card-header">
+                <div class="card">
+                    <div class="card-header level">
                         <div class="level">
                             <span class="flex">
 
@@ -48,9 +48,6 @@
                             and has {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}.
                         </p>
 
-
-
-
                     </div>
                 </div>
 
@@ -63,10 +60,8 @@
             <div class="col-md-8">
 
                 @foreach($replies as $reply)
-                    @include('threads.reply')
+                    @include('Threads.reply')
                 @endforeach
-
-
             </div>
 
 

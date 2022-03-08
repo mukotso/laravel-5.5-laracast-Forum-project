@@ -4,43 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Reply;
 use App\Thread;
-use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
-    public function __constructor(){
+    public function __constructor()
+    {
         $this->middleware('auth');
     }
-    public function store($channelId, Thread $thread){
 
-        $this->validate(request(),[
-            'body'=>'required',
+    public function store($channelId, Thread $thread)
+    {
+
+        $this->validate(request(), [
+            'body' => 'required',
         ]);
 
         $thread->addReply([
-            'body'=>request('body'),
-            'user_id'=> Auth()->User()->id
+            'body' => request('body'),
+            'user_id' => Auth()->User()->id
         ]);
 
         return redirect()->back();
     }
 
-    public function  destroy  (Reply $reply){
+    public function destroy(Reply $reply)
+    {
 
         $this->authorize('update', $reply);
-//        if($reply->user_id != auth()->user()->id){
-//            return response([], 403);
-//        }
 
         $reply->delete();
-        if(request()->expectsJson()){
-            return response(['status'=>'Reply Deleted']);
+        if (request()->expectsJson()) {
+            return response(['status' => 'Reply Deleted']);
         }
         return back();
     }
-    public function update(Reply $reply){
-        $this->authorize('update', $reply);
-      $reply->update([request('body')]) ;
 
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->update(['body' => request('body')]);
     }
 }

@@ -13,11 +13,31 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
-        body { padding-bottom: 100px; }
-        .level { display: flex; align-items: center; }
-        .flex { flex: 1; }
-        .mr-1{margin-right: 1em}
-        [v-cloack]{display:none;}
+        body {
+            padding-bottom: 100px;
+        }
+
+        .level {
+            display: flex;
+            align-items: center;
+        }
+
+        .side {
+            display: flex;
+            align-items: end;
+        }
+
+        .flex {
+            flex: 1;
+        }
+
+        .mr-1 {
+            margin-right: 1em
+        }
+
+        [v-cloack] {
+            display: none;
+        }
     </style>
 
 </head>
@@ -25,10 +45,11 @@
 <div id="app">
     @include('layouts.nav');
     @yield('content')
-    <flash message="{{session('flash')}}"></flash>
+{{--    <flash message="Test Message"></flash>--}}
+    <flash message="{{ session('flash') }}"></flash>
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

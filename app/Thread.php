@@ -4,7 +4,6 @@ namespace App;
 
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
-use Favouritable;
 
 class Thread extends Model
 {
@@ -28,9 +27,9 @@ use RecordsActivity;
 //        });
 
         static::deleting(function ($thread) {
-            $thread->replies()->each->delete();
-
+            $thread->replies()->delete();
         });
+
 
 
 
@@ -41,26 +40,22 @@ use RecordsActivity;
 
     public function path()
     {
-        ;
         return '/threads/' . $this->channel->slug . '/' . $this->id;
     }
 
     public function replies()
     {
-        ;
         return $this->hasMany(Reply::class)
             ->withCount('favorites')->with('owner');
     }
 
     public function creator()
     {
-        ;
         return $this->belongsTo(User::class, 'user_id');
     }
 
     public function addReply($reply)
     {
-        ;
         $this->replies()->create($reply);
 
     }

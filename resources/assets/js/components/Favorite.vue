@@ -1,8 +1,8 @@
 <template>
-  <button type="submit" class="btn btn-sm btn-primary"
+  <button type="submit" class="btn btn-sm"
+          :class="classes"
           @click="toggle">
-    <span class="glyphicon glyphicon-heart"> </span>
-   <span v-text="favouritesCount"></span>
+   <span v-text="count"></span> Likes
   </button>
 </template>
 
@@ -10,8 +10,10 @@
 export default {
   props:['reply'],
   data(){
-    count:this.reply.favoritesCount,
-        active:this.reply.isFavorited
+    return{
+      count:this.reply.favoritesCount,
+       active:this.reply.isFavorited
+    }
   },
   computed:{
     classes(){
@@ -24,7 +26,6 @@ export default {
         this.destroy();
           }else{
         this.create();
-
       }
     },
 
@@ -35,7 +36,6 @@ export default {
     },
     destroy(){
       axios.delete('/replies/'+this.reply.id+'/favorites')
-
     }
   }
 }

@@ -1,13 +1,11 @@
-
 <div class="card">
-
     <div class="card-header">
-{{ $heading }}
-</div>
+        {{ $heading }}
+    </div>
 
-<div class="card-body">
-    {{ $body }}
-</div>
-
+    <div class="card-body">
+        {{ $body }}
+    </div>
+    <hr>
 </div>
 <br>

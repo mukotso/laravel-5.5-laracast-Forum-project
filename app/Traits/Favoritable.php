@@ -1,12 +1,18 @@
 <?php
-namespace App\Traits;
 
+namespace App\Traits;
 
 
 use App\Favourite;
 
 trait Favoritable
 {
+
+    protected static function bootFavoritable(){
+        static::deleting(function ($model){
+            $model->favorites->each->delete();
+        });
+    }
 //public function favorites()
 //{
 //return $this->morphMany(Favorite::class, 'favorited');
@@ -30,30 +36,39 @@ trait Favoritable
 //return $this->favorites->count();
 //}
 
-    public function favorites(){
+    public function favorites()
+    {
         return $this->morphMany(Favourite::class, 'favorited');
     }
 
-    public function favorite(){
-        $attributes =['user_id' =>auth()->id()];
-        if(! $this->favorites()->where($attributes)->exists()){
+    public function favorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+        if (!$this->favorites()->where($attributes)->exists()) {
             $this->favorites()->create($attributes);
         }
 
     }
-    public function isFavorited(){
+
+    public function isFavorited()
+    {
         return !! $this->favorites()->where('user_id', auth()->id())->count();
     }
-    public function getIsFavouritedAttribute(){
-        return $this->isFavorite();
+
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+
     }
 
-    public function getFavoritesCountAttribute(){
+    public function getFavoritesCountAttribute()
+    {
         return $this->favorites->count();
     }
 
-    public function unfavorite(){
-       $attributes=['user_id' =>auth()->id()] ;
-       $this->favourites()->where($attributes)->delete();
+    public function unfavorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+        $this->favorites()->where($attributes)->get()->each->delete();
     }
 }

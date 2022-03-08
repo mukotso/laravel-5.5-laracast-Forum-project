@@ -9,17 +9,25 @@ class Reply extends Model
 {
 
     use Favoritable;
-    protected $guarded= [];
 
-    protected $with =['owner', 'favorites'];
-    protected $appends =['favouritesCount','isFavorited'];
+    protected $guarded = [];
 
-    public function owner(){
-        return  $this->belongsTo(User::class ,'user_id');
+    protected $with = ['owner', 'favorites'];
+    protected $appends = ['favoritesCount', 'isFavorited'];
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function path(){
-        return $this->thread->path()."#reply-{$this->id}";
+    public function path()
+    {
+        return $this->thread->path() . "#reply-{$this->id}";
+    }
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class);
     }
 
 //    public function favorites(){

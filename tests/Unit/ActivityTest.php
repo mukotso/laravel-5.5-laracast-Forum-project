@@ -2,23 +2,26 @@
 
 namespace Tests\Unit;
 
+use App\Activity;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class ActivityTest extends TestCase
 {
     use DatabaseMigrations;
+
     public function it_records_activity_when_a_thread_is_created()
     {
         $this->signIn();
 
-        $thread = create('App\Models\Thread');
+        $thread = create('App\Thread');
 
         $this->assertDatabaseHas('activities', [
-            'type'          => 'thread_created',
-            'user_id'       => auth()->id(),
-            'subject_id'    => $thread->id,
-            'subject_type'  => 'App\Models\Thread'
+            'type' => 'thread_created',
+            'user_id' => auth()->id(),
+            'subject_id' => $thread->id,
+            'subject_type' => 'App\Thread'
         ]);
 
         $activity = Activity::first();
@@ -30,14 +33,14 @@ class ActivityTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Models\Thread');
-        $reply = create('App\Models\Reply');
+        $thread = create('App\Thread');
+        $reply = create('App\Reply');
 
         $this->assertDatabaseHas('activities', [
-            'type'          => 'reply_created',
-            'user_id'       => auth()->id(),
-            'subject_id'    => $reply->id,
-            'subject_type'  => 'App\Models\Reply'
+            'type' => 'reply_created',
+            'user_id' => auth()->id(),
+            'subject_id' => $reply->id,
+            'subject_type' => 'App\Reply'
         ]);
 
         $this->assertEquals(2, Activity::count());
@@ -48,7 +51,7 @@ class ActivityTest extends TestCase
 
     public function it_fetches_users_feed()
     {
-        $this->signIn(); 
+        $this->signIn();
 
         create('App\Thread', ['user_id' => auth()->id()], 2);
 

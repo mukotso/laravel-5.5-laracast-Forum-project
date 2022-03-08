@@ -9,7 +9,6 @@ window._ = require('lodash');
 
 try {
     window.$ = window.jQuery = require('jquery');
-
     require('bootstrap-sass');
 } catch (e) {}
 
@@ -37,8 +36,8 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-window.events=new Vue();
-window.flash=function(message){
-  window.events.$emit('flash', message);
-};
+// window.events=new Vue();
+// window.flash=function(message){
+//   window.events.$emit('flash', message);
+// };
 

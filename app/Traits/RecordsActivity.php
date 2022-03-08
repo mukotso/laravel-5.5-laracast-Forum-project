@@ -7,19 +7,23 @@ trait RecordsActivity{
 
     protected static function bootRecordsActivity(){
         if(auth()->guest())  return;
-        foreach(static::getRecordEvents() as $event){
+        foreach(static::getActivitiesToRecord() as $event){
             static::$event(function ($model) use ($event) {
                 $model->recordActivity($event);
             });
 
         }
-static::deleting(function($model){
+    static::deleting(function($model){
     $model->activity()->delete();
 
 });
     }
-    public
-    function recordActivity($event)
+    protected static function getActivitiesToRecord()
+    {
+        return ['created'];
+    }
+
+    public function recordActivity($event)
     {
         $this->activity()->create([
             'user_id'=>auth()->id(),
@@ -36,7 +40,7 @@ static::deleting(function($model){
     }
     protected function getActivityType($event){
         $type=strtolower((new \ReflectionClass($this))->getShortName());
-        return "($event .'_' .$type)";
+        return "{$event}_{$type}";
     }
 
     public function activity(){
