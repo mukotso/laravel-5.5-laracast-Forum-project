@@ -9,9 +9,13 @@ class RepliesController extends Controller
 {
     public function __constructor()
     {
-        $this->middleware('auth');
+        $this->middleware('auth',['except'=>'index']);
     }
 
+
+    public function index($channelId, Thread $thread){
+       return $thread->replies()->paginate(1);
+    }
     public function store($channelId, Thread $thread)
     {
 

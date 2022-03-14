@@ -43,7 +43,7 @@
                         <p>
                             This thread was published {{ $thread->created_at->diffForHumans() }} by
                             <a>{{ $thread->creator->name }}</a>,
-                            and currently has <span v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}.
+                            and currently has <span v-text="{{$thread->replies_count}}"></span> {{ str_plural('comment', $thread->replies_count) }}.
                         </p>
 
                     </div>
@@ -57,7 +57,8 @@
         <div class="row ">
             <div class="col-md-8">
 
-                <replies :data="{{$thread->replies}}"  @added="repliesCount++" @removed="repliesCount--" ></replies>
+{{--                <replies  @added="repliesCount++" @removed="repliesCount--" ></replies>--}}
+                <replies></replies>
 {{--                @foreach($replies as $reply)--}}
 {{--                    @include('Threads.reply')--}}
 {{--                @endforeach--}}
@@ -65,7 +66,6 @@
 
 
         </div>
-{{--            {{ $replies->links() }}--}}
 
                 </div>
             </div>

@@ -52,11 +52,7 @@ class ThreadsController extends Controller
     {
       //return $thread->load('replies.favorite');
 
-        return view('threads.show',
-            [
-                'thread'=>$thread,
-                'replies'=>$thread->replies
-            ]);
+        return view('threads.show',compact('thread'));
 
     }
 

@@ -6,7 +6,7 @@
         <div class="form-group">
           <textarea v-model="body" class="form-control" placeholder="Reply here" rows="5" required></textarea>
         </div>
-        <button type="submit" class="btn btn-default" @click="addReply">POST</button>
+        <button type="submit" class="btn btn-default" @click.prevent="addReply">POST</button>
 
       </div>
 
