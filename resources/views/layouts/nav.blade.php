@@ -13,7 +13,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                FORUMq
+                FORUM
             </a>
         </div>
 
@@ -33,6 +33,8 @@
                         @endif
 
                         <li><a href="/threads?popular=1">Popular Threads</a></li>
+
+                        <li><a href="/threads?unanswered=1">Unanswered Threads</a></li>
                         &nbsp;
                     </ul>
                 </li>

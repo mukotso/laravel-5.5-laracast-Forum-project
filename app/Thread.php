@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-use RecordsActivity;
+    use RecordsActivity;
 
     protected $guarded = [];
     protected $with = ['creator', 'channel'];
@@ -31,11 +31,7 @@ use RecordsActivity;
         });
 
 
-
-
-
     }
-
 
 
     public function path()
@@ -56,7 +52,11 @@ use RecordsActivity;
 
     public function addReply($reply)
     {
-     return   $this->replies()->create($reply);
+
+       $reply=$this->replies()->create($reply);
+//        $this->increments('replies_count');
+        return $reply;
+
 
     }
 

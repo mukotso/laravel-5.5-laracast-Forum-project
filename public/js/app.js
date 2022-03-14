@@ -2392,6 +2392,7 @@ __webpack_require__.r(__webpack_exports__);
   refresh: function refresh(data) {
     this.dataSet = data;
     this.items = data.data;
+    window.scrollTo(0, 0);
   }
 });
 
@@ -56022,7 +56023,12 @@ var render = function () {
               {
                 staticClass: "btn btn-default",
                 attrs: { type: "submit" },
-                on: { click: _vm.addReply },
+                on: {
+                  click: function ($event) {
+                    $event.preventDefault()
+                    return _vm.addReply.apply(null, arguments)
+                  },
+                },
               },
               [_vm._v("POST")]
             ),

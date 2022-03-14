@@ -20,8 +20,9 @@ class ParticipateInForumTest extends TestCase
         $reply = make('App\Reply');
         $this->post($thread->path() . '/replies', $reply->toArray());
 //    The reply should be visible in the page
-        $this->get($thread->path())
-            ->assertSee($reply->body);
+        $this->get($thread->path());
+        $this->assertDatabaseHas('replies',['body'=>$reply->body]);
+        $this->assertEquals(1,$thread->fresh()->replies_count);
     }
 
     public function test_unauthenticated_user_may_not_add_replies()
@@ -61,6 +62,7 @@ class ParticipateInForumTest extends TestCase
         $reply = create('App\Reply', ['user_id' => auth()->id()]);
         $this->delete("/replies/{$reply->id}");
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+         $this->assertEquals(0,$reply->thread->fresh()->replies_count);
     }
 
     public function authorized_users_can_update_replies()

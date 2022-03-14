@@ -6,7 +6,7 @@ use App\User;
 
 class ThreadFilters extends Filters
 {
-    protected $filters = ['by','popular'];
+    protected $filters = ['by','popular','unanswered'];
 
     protected function by($username) {
         $user = User::whereName($username)->firstOrFail();
@@ -14,6 +14,10 @@ class ThreadFilters extends Filters
     }
 
     protected function popular() {
-        $this->builder->orderBy('replies_count', 'desc');
+        $this->builder->orderBy('replies_count', 'DESC');
+    }
+
+    protected function unanswered() {
+        $this->builder->where('replies_count', 0);
     }
 }
