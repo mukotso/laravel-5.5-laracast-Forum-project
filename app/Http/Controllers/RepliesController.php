@@ -19,10 +19,14 @@ class RepliesController extends Controller
             'body' => 'required',
         ]);
 
-        $thread->addReply([
+        $reply=$thread->addReply([
             'body' => request('body'),
             'user_id' => Auth()->User()->id
         ]);
+
+        if(request()->expectsJson()){
+            return $reply->load('owner');
+        }
 
         return redirect()->back();
     }

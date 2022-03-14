@@ -57,7 +57,7 @@
         <div class="row ">
             <div class="col-md-8">
 
-                <replies :data="{{$thread->replies}}" @removed="repliesCount--" ></replies>
+                <replies :data="{{$thread->replies}}"  @added="repliesCount++" @removed="repliesCount--" ></replies>
 {{--                @foreach($replies as $reply)--}}
 {{--                    @include('Threads.reply')--}}
 {{--                @endforeach--}}
@@ -66,25 +66,10 @@
 
         </div>
 {{--            {{ $replies->links() }}--}}
-        @if(auth()->check())
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <form method="POST" action="{{$thread->path().'/replies'}}" >
-                       {{csrf_field()}}
-                        <div class="form-group">
-                            <textarea name="body" class="form-control" placeholder="Reply here" rows="5"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-default">POST</button>
-                    </form>
-                    @else
-                        <p> <a href="{{route('login')}}"> Sign in</a>Please sign in to participate in the discussion</p>
-                    @endif
+
                 </div>
             </div>
 
-    </div>
-
-    </div>
     </thread-view>
 @endsection
 

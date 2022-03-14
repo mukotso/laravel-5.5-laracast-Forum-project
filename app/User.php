@@ -23,7 +23,7 @@ class User extends Authenticatable
         return 'name';
     }
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','email'
     ];
 
     public function threads(){
