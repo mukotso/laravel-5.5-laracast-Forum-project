@@ -51,6 +51,7 @@ class ThreadsController extends Controller
     public function show( $channelId,Thread $thread)
     {
       //return $thread->load('replies.favorite');
+       return  $thread->append('isSubscribedTo');
 
         return view('threads.show',compact('thread'));
 

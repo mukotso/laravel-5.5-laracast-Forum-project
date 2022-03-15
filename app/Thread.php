@@ -80,13 +80,20 @@ class Thread extends Model
 
     public function subscriptions()
     {
-      return  $this->hasMany(ThreadSubscription::class);
+        return $this->hasMany(ThreadSubscription::class);
 
     }
 
     function unsubscribe($userId = null)
     {
         $this->subscriptions()->where('user_id', $userId ?: auth()->id())->delete();
+    }
+
+    public function getIsSubscribedToAttribute()
+    {
+        return $this->subscriptions()
+            ->where('user_id', auth()->id())
+            ->exists();
     }
 
 }
