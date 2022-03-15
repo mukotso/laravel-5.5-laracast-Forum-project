@@ -53,7 +53,7 @@ class Thread extends Model
     public function addReply($reply)
     {
 
-       $reply=$this->replies()->create($reply);
+        $reply = $this->replies()->create($reply);
 //        $this->increments('replies_count');
         return $reply;
 
@@ -70,4 +70,23 @@ class Thread extends Model
     {
         return $filters->apply($query);
     }
+
+    public function subscribe($userId = null)
+    {
+        $this->subscriptions()->create([
+            'user_id' => $userId ?: auth()->id()
+        ]);
+    }
+
+    public function subscriptions()
+    {
+      return  $this->hasMany(ThreadSubscription::class);
+
+    }
+
+    function unsubscribe($userId = null)
+    {
+        $this->subscriptions()->where('user_id', $userId ?: auth()->id())->delete();
+    }
+
 }
