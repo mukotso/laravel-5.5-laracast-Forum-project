@@ -38,9 +38,13 @@ export default {
       axios.post(this.endpoint, {body: this.body})
           .then(response => {
             this.body = '';
-            // flash('Your Reply has been saved');
+             flash('Your Reply has been saved');
             this.$emit('created', response.data);
-          });
+          }).catch(error=>{
+            // console.log(error.response);
+            flash(error.response.data,'danger');
+      });
+
     }
   }
 }

@@ -64,8 +64,8 @@ export default {
       return window.App.signedIn;
     },
     canUpdate() {
-      // return this.authorize(user => this.data.user_id == user.id)
-      return  this.data.user_id==window.App.user.id;
+      return this.authorize(user => this.data.user_id === user.id)
+      // return  this.data.user_id==window.App.user.id;
     }
   },
   methods:
@@ -73,6 +73,9 @@ export default {
         update() {
           axios.patch('/replies/' + this.data.id, {
             body: this.body
+          })
+          .catch(error=>{
+            flash(error.response.data,'danger')
           });
           this.editing = false;
           flash('updated');
