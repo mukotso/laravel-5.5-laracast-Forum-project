@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Inspections\Spam;
 use App\Reply;
 use App\Thread;
@@ -20,26 +21,14 @@ class RepliesController extends Controller
         return $thread->replies()->paginate(1);
     }
 
-    public function store($channelId, Thread $thread)
+    public function store($channelId, Thread $thread,CreatePostRequest $form)
     {
-        if(Gate::denies('create', new Reply)){
-            return response ('
-                You are posting too frequently', 422);
-        }
-        try {
 
-            $this->authorize('create',new Reply);
-            $this->validate(request(), [
-                'body' => 'required|spamfree',
-            ]);
-            $reply = $thread->addReply([
+            return $thread->addReply([
                 'body' => request('body'),
                 'user_id' => Auth()->User()->id
-            ]);
+            ])->load('owner');
 
-        } catch (\Exception $e) {
-            return response('Sorry your reply could not be saved at this time.', 422);
-        }
     }
 
     public function destroy(Reply $reply)
