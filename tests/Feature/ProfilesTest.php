@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ProfilesTest extends TestCase
 {
 
-    public function a_user_has_profile ()
+    public function test_a_user_has_profile ()
     {
         $this->signIn();
         $user = create('App\ User');
@@ -19,7 +19,7 @@ class ProfilesTest extends TestCase
     }
 
 
-    public function profile_has_user_threads ()
+    public function test_profile_has_user_threads ()
     {
         $this->signIn();
 

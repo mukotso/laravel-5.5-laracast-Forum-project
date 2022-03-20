@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Events\ThreadHasNewReply;
-use App\Notifications\ThreadWasUpdated;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 
@@ -59,10 +58,10 @@ class Thread extends Model
 //        $this->increments('replies_count');
 
 
-event(new ThreadHasNewReply($this,$reply));
+        event(new ThreadHasNewReply($this, $reply));
 
         $this->subscriptions->
-            where('user_id', '!=', $reply->user_id)
+        where('user_id', '!=', $reply->user_id)
             ->each->notify($reply);
 
 //        filter(function ($sub) use ($reply) {
@@ -119,6 +118,13 @@ event(new ThreadHasNewReply($this,$reply));
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists();
+    }
+
+    public function hasUpdatesFor()
+    {
+        $key = sprintf("users.%s.visits.%s", auth()->id(), $this->id);
+
+        return $this->updated_at > cache($key);
     }
 
 }

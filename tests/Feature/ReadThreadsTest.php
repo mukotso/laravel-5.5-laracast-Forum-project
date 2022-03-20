@@ -34,7 +34,7 @@ class ReadThreadsTest extends TestCase
 
 
 
-    function a_user_can_filter_threads_according_to_a_channel()
+    function test_a_user_can_filter_threads_according_to_a_channel()
     {
         $channel = create('App\Channel');
         $threadInChannel = create('App\thread', ['channel_id' => $channel->id]);
@@ -46,7 +46,7 @@ class ReadThreadsTest extends TestCase
 
     }
 
-    public function a_user_can_filter_threads_by_any_username()
+    public function test_a_user_can_filter_threads_by_any_username()
     {
         $this->signIn(create('App\User', ['name' => 'johnDoe']));
 
@@ -58,7 +58,7 @@ class ReadThreadsTest extends TestCase
             ->assertDontSee($threadNotByJohn->title);
     }
 
-    public function a_user_can_filter_by_popularity()
+    public function test_a_user_can_filter_by_popularity()
     {
         $threadTwoReplies = create('App\Models\Thread');
         create('App\Models\Reply', ['thread_id' => $threadTwoReplies->id], 2);
@@ -73,7 +73,7 @@ class ReadThreadsTest extends TestCase
         $this->assertEquals([3, 2, 0], $threadsFromResponse->pluck('replies_count')->toArray());
     }
 
-    public function a_user_can_filter_threads_by_those_that_are_unanswered(){
+    public function test_a_user_can_filter_threads_by_those_that_are_unanswered(){
         $thread=create('App\Thread');
         create('App\Reply',['thread_id'=>$thread->id]);
 
@@ -81,7 +81,7 @@ class ReadThreadsTest extends TestCase
         $this->assertCount(1,$response);
     }
 
-    public function a_user_all_replies_for_a_given_thread()
+    public function test_a_user_all_replies_for_a_given_thread()
     {
         $thread = create('App\Thread');
         create('App\Thread', ['thread_id'],2);

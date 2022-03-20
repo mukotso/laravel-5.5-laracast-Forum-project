@@ -9,7 +9,7 @@ class SubscribeToThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    function a_user_can_subscribe_to_threads()
+    function test_a_user_can_subscribe_to_threads()
     {
         $this->signIn();
         $thread = create('App\Thread');
@@ -22,7 +22,7 @@ class SubscribeToThreadsTest extends TestCase
 //        $this->assertCount(1,auth()->user()->fresh()->notifications);
     }
 
-    function a_user_unsubscribe_from_thread(){
+    function test_a_user_unsubscribe_from_thread(){
         $this->signIn();
         $thread = create('App\Thread');
         $thread->subscribe();

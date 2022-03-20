@@ -11,7 +11,7 @@ class ActivityTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function it_records_activity_when_a_thread_is_created()
+    public function test_it_records_activity_when_a_thread_is_created()
     {
         $this->signIn();
 
@@ -29,7 +29,7 @@ class ActivityTest extends TestCase
         $this->assertEquals($activity->subject->id, $thread->id);
     }
 
-    public function it_records_activity_when_a_reply_is_created()
+    public function test_it_records_activity_when_a_reply_is_created()
     {
         $this->signIn();
 
@@ -49,7 +49,7 @@ class ActivityTest extends TestCase
         $this->assertEquals($activity->subject->id, $reply->id);
     }
 
-    public function it_fetches_users_feed()
+    public function test_it_fetches_users_feed()
     {
         $this->signIn();
 

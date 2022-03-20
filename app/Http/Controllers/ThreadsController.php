@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Channel;
-use App\Thread;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Filters\ThreadFilters;
+use App\Thread;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
 {
@@ -15,7 +15,7 @@ class ThreadsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Channel $channel ,ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
 
 
@@ -30,10 +30,10 @@ class ThreadsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'title'=>'required',
-            'body'=>'required',
-            'channel_id'=>'required|exists:channels,id'
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'channel_id' => 'required|exists:channels,id'
 
         ]);
 
@@ -48,18 +48,21 @@ class ThreadsController extends Controller
             ->with('flash', 'Your thread has been published');
     }
 
-    public function show( $channelId,Thread $thread)
+    public function show($channelId, Thread $thread)
     {
-      //return $thread->load('replies.favorite');
+
+        $key = sprintf("users.%s.visits.%s", auth()->id(), $thread->id);
+        cache()->forever($key, Carbon::now());
+        //return $thread->load('replies.favorite');
 //       return  $thread->append('isSubscribedTo');
 
-        return view('threads.show',compact('thread'));
+        return view('threads.show', compact('thread'));
 
     }
 
     protected function getThreads(Channel $channel, ThreadFilters $filters)
     {
-        $threads = Thread::latest()->filter($filters) ;
+        $threads = Thread::latest()->filter($filters);
 
         if ($channel->exists) {
             $threads = $threads->whereChannelId($channel->id);
@@ -75,11 +78,11 @@ class ThreadsController extends Controller
 //
 //            abort(403,'You do not have permission to do this !!!');
 //        }
-     //        $this->authorize('update', $thread);
+        //        $this->authorize('update', $thread);
 
-       //        $thread->replies()->delete();
+        //        $thread->replies()->delete();
         $thread->delete();
-        if(request()->wantsJson()){
+        if (request()->wantsJson()) {
             return response([], 204);
         }
 

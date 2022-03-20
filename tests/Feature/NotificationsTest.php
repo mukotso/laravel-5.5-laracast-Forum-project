@@ -15,7 +15,7 @@ class NotificationsTest extends TestCase
         $this->signIn();
     }
 
-    function a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
+    function test_a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
     {
 
         $thread = create('App\thread')->subscribe();
@@ -33,7 +33,7 @@ class NotificationsTest extends TestCase
         $this->assertCount(1, auth()->user()->fresh()->notifications);
     }
 
-    function a_user_can_fetch_their_unread_notifications()
+    function test_a_user_can_fetch_their_unread_notifications()
     {
 
         create(DatabaseNotification::class);
@@ -48,7 +48,7 @@ class NotificationsTest extends TestCase
         $this->assertCount(1, $response);
     }
 
-    function a_user_can_mark_a_notification_as_read()
+    function test_a_user_can_mark_a_notification_as_read()
     {
 
         create(DatabaseNotification::class);

@@ -40,7 +40,7 @@ class CreateThreadTest extends TestCase
 
     }
 
-    public function a_thread_requires_a_title(){
+    public function test_a_thread_requires_a_title(){
 
         $this->publishThread(['title' =>null])
             ->assertSessionHasErrors('title');
@@ -53,7 +53,7 @@ class CreateThreadTest extends TestCase
 
     }
 
-    public function a_thread_requires_a_valid_channel(){
+    public function test_a_thread_requires_a_valid_channel(){
 
         factory ('App\Channel',2)->create();
         $this->publishThread(['channel_id' =>null])
@@ -66,7 +66,7 @@ class CreateThreadTest extends TestCase
     }
 
 
-    public function publishThread($overrides =[]){
+    public function test_publishThread($overrides =[]){
         $this->withExceptionHandling()->signIn();
        $thread =make('App\Thread',$overrides);
      return  $this->post('/threads', $thread->toArray());
@@ -74,7 +74,7 @@ class CreateThreadTest extends TestCase
     }
 
 
-    public function unauthorized_users_may_not_delete_threads()
+    public function test_unauthorized_users_may_not_delete_threads()
     {
         $this->withExceptionHandling();
 
@@ -88,7 +88,7 @@ class CreateThreadTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function authorized_users_may_delete_threads()
+    public function test_authorized_users_may_delete_threads()
     {
         $this->signIn();
 

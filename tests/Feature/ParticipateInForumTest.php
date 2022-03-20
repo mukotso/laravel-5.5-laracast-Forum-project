@@ -33,7 +33,7 @@ class ParticipateInForumTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    public function a_reply_requires_a_body()
+    public function test_a_reply_requires_a_body()
     {
         $this->withExceptionHandling()->signIn();
 
@@ -44,7 +44,7 @@ class ParticipateInForumTest extends TestCase
             ->assertSessionHasErrors('body');
     }
 
-    public function unauthorized_users_cannot_delete_replies()
+    public function test_unauthorized_users_cannot_delete_replies()
     {
         $this->withExceptionHandling();
         $reply = create('App\Reply');
@@ -56,7 +56,7 @@ class ParticipateInForumTest extends TestCase
 
     }
 
-    public function authorized_users_can_delete_replies()
+    public function test_authorized_users_can_delete_replies()
     {
         $this->signIn();
         $reply = create('App\Reply', ['user_id' => auth()->id()]);
@@ -65,7 +65,7 @@ class ParticipateInForumTest extends TestCase
          $this->assertEquals(0,$reply->thread->fresh()->replies_count);
     }
 
-    public function authorized_users_can_update_replies()
+    public function test_authorized_users_can_update_replies()
     {
         $this->signIn();
         $reply = create('App\Reply', ['user_id' => auth()->id()]);
@@ -76,7 +76,7 @@ class ParticipateInForumTest extends TestCase
 
     }
 
-    public function unauthorized_users_cannot_update_replies()
+    public function test_unauthorized_users_cannot_update_replies()
     {
         $this->withExceptionHandling();
         $reply = create('App\Reply');
