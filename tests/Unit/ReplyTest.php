@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,5 +26,12 @@ class ReplyTest extends TestCase
 
         //we should see replies when we visit that page
         $this->assertInstanceOf(User::class,$thread->creator);
+    }
+
+    public function test_a_reply_knows_if_it_was_just_replied(){
+        $reply = factory('App\Reply')->create();
+        $this->assertTrue($reply->wasJustPublished());
+        $reply->created_at=Carbon::now()->subMonth();
+        $this->assertFalse($reply->wasJustPublished());
     }
 }
