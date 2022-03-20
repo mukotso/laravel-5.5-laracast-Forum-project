@@ -24,22 +24,10 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
-
-        $reply = $thread->addReply([
+        return $thread->addReply([
             'body' => request('body'),
             'user_id' => Auth()->User()->id
-        ]);
-
-        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
-        $names = $matches[1];
-        foreach ($names as $name) {
-            $user = User::whereName($name)->first();
-            if ($user) {
-                $user->notify(new youWereMentioned($reply));
-            }
-
-        }
-        return $reply->load('owner');
+        ])->load('owner');
     }
 
     public function destroy(Reply $reply)

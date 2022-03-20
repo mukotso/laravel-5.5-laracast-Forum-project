@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\ThreadHasNewReply;
+use App\Events\ThreadReceivedNewReply;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 
@@ -57,6 +58,8 @@ class Thread extends Model
         $reply = $this->replies()->create($reply);
 //        $this->increments('replies_count');
 
+
+        event(new ThreadReceivedNewReply($reply));
 
         event(new ThreadHasNewReply($this, $reply));
 
