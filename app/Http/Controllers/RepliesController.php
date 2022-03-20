@@ -3,32 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
+use App\Spam;
 use App\Thread;
 
 class RepliesController extends Controller
 {
     public function __constructor()
     {
-        $this->middleware('auth',['except'=>'index']);
+        $this->middleware('auth', ['except' => 'index']);
     }
 
 
-    public function index($channelId, Thread $thread){
-       return $thread->replies()->paginate(1);
+    public function index($channelId, Thread $thread)
+    {
+        return $thread->replies()->paginate(1);
     }
-    public function store($channelId, Thread $thread)
+
+    public function store($channelId, Thread $thread, Spam $spam)
     {
 
         $this->validate(request(), [
             'body' => 'required',
         ]);
 
-        $reply=$thread->addReply([
+        $spam->detect(request('body'));
+
+
+        $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => Auth()->User()->id
         ]);
 
-        if(request()->expectsJson()){
+        if (request()->expectsJson()) {
             return $reply->load('owner');
         }
 
