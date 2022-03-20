@@ -19,11 +19,13 @@
 
     <div class="card-body">
       <div v-if="editing">
-        <div class="form-group">
-          <textarea class="form-control" v-model="body"></textarea>
-        </div>
-        <button class="btn btn-xs btn-link" @click="editing=false">CANCEL</button>
-        <button class="btn btn-xs btn-primary mr-1" @click="update()">UPDATE</button>
+        <form @submit="update">
+          <div class="form-group">
+            <textarea class="form-control" v-model="body" required></textarea>
+          </div>
+          <button type="button" class="btn btn-xs btn-link" @click="editing=false">CANCEL</button>
+          <button type="submit" class="btn btn-xs btn-primary mr-1">UPDATE</button>
+        </form>
       </div>
       <div v-else v-text="body">
 
@@ -42,6 +44,7 @@
 <script>
 import Favorite from './favorite.vue';
 import moment from 'moment';
+
 export default {
   name: "Reply",
   props: ['data'],
@@ -57,7 +60,7 @@ export default {
     }
   },
   computed: {
-    ago(){
+    ago() {
       return moment(this.data.created_at).fromNow() + '......';
     },
     signedIn() {
@@ -74,9 +77,9 @@ export default {
           axios.patch('/replies/' + this.data.id, {
             body: this.body
           })
-          .catch(error=>{
-            flash(error.response.data,'danger')
-          });
+              .catch(error => {
+                flash(error.response.data, 'danger')
+              });
           this.editing = false;
           flash('updated');
         },
