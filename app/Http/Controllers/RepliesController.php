@@ -22,7 +22,9 @@ class RepliesController extends Controller
     public function store($channelId, Thread $thread)
     {
         try {
-            $this->validateReply();
+            $this->validate(request(), [
+                'body' => 'required|spamfree',
+            ]);
             $reply = $thread->addReply([
                 'body' => request('body'),
                 'user_id' => Auth()->User()->id
@@ -49,7 +51,9 @@ class RepliesController extends Controller
     {
         $this->authorize('update', $reply);
         try {
-            $this->validateReply();
+            $this->validate(request(), [
+                'body' => 'required|spamfree',
+            ]);
             $reply->update(['body' => request('body')]);
 
         } catch (\Exception $e) {
@@ -58,12 +62,4 @@ class RepliesController extends Controller
 
     }
 
-    function validateReply(Spam $spam)
-    {
-        $this->validate(request(), [
-            'body' => 'required',
-        ]);
-
-        $spam->detect(request('body'));
-    }
 }
