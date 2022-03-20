@@ -53,9 +53,11 @@ class RepliesController extends Controller
         return back();
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply ,Spam $spam)
     {
         $this->authorize('update', $reply);
         $reply->update(['body' => request('body')]);
+
+        $spam->detect(request(['body']));
     }
 }
