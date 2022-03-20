@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Inspections\Spam;
+use App\Notifications\youWereMentioned;
 use App\Reply;
 use App\Thread;
-use Illuminate\Auth\Access\Gate;
+use App\User;
 
 class RepliesController extends Controller
 {
@@ -21,14 +22,24 @@ class RepliesController extends Controller
         return $thread->replies()->paginate(1);
     }
 
-    public function store($channelId, Thread $thread,CreatePostRequest $form)
+    public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
 
-            return $thread->addReply([
-                'body' => request('body'),
-                'user_id' => Auth()->User()->id
-            ])->load('owner');
+        $reply = $thread->addReply([
+            'body' => request('body'),
+            'user_id' => Auth()->User()->id
+        ]);
 
+        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
+        $names = $matches[1];
+        foreach ($names as $name) {
+            $user = User::whereName($name)->first();
+            if ($user) {
+                $user->notify(new youWereMentioned($reply));
+            }
+
+        }
+        return $reply->load('owner');
     }
 
     public function destroy(Reply $reply)
