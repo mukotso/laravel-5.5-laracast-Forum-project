@@ -26,7 +26,9 @@
         "webpack-cli": "^4.9.2"
     },
     "dependencies": {
+        "at.js": "^1.5.4",
         "css-loader": "^6.7.0",
+        "jquery.caret": "^0.3.1",
         "moment": "^2.29.1",
         "node-sass": "^7.0.1"
     }

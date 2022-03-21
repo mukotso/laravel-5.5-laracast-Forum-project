@@ -27,7 +27,7 @@
           <button type="submit" class="btn btn-xs btn-primary mr-1">UPDATE</button>
         </form>
       </div>
-      <div v-else v-text="body">
+      <div v-else v-html="body">
 
       </div>
       <div class="panel-footer level" v-if="canUpdate">

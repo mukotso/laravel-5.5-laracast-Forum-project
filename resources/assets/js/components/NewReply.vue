@@ -4,7 +4,7 @@
       <div class="col-md-8">
 
         <div class="form-group">
-          <textarea v-model="body" class="form-control" placeholder="Reply here" rows="5" required></textarea>
+          <textarea id="body" v-model="body" class="form-control" placeholder="Reply here" rows="5" required></textarea>
         </div>
         <button type="submit" class="btn btn-default" @click.prevent="addReply">POST</button>
 
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import 'at.js';
+import 'jquery.caret';
 export default {
   props: ['endpoint'],
   name: "NewReply",
@@ -32,6 +34,21 @@ export default {
     signedIn() {
       return window.App.signedIn;
     }
+  },
+
+  mounted(){
+    $('#body').atwho({
+      at:"@",
+      delay:750,
+      callbacks:{
+        remoteFilter:function (query, callback){
+          console.log('Called');
+          $.getJSON("/api/users",{name:query}, function(usernames){
+            callback(usernames)
+          });
+        }
+      }
+    });
   },
   methods: {
     addReply() {

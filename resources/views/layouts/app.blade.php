@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
     <script>
         window.App={!!  json_encode([
        'csrfToken'=>csrf_token(),
